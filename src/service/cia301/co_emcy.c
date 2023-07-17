@@ -250,6 +250,14 @@ void COEmcyClr(CO_EMCY *emcy, uint8_t err)
         COEmcyUpdate(emcy, err, 0, 0);
         COEmcySend  (emcy, err, 0, 0);
     }
+
+    for (size_t i = 0; i < CO_EMCY_STORAGE; i++) //? oN algorithm, might cause delays
+    {
+        if (COEmcyGet(emcy, i) == 1)
+        {
+            COEmcySend(emcy, i, 0, 1);
+        }
+    }
 }
 
 int16_t COEmcyGet(CO_EMCY *emcy, uint8_t err)
