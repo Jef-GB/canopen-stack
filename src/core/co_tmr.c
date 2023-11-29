@@ -25,8 +25,7 @@
 * EXTERNAL FUNCTIONS
 ******************************************************************************/
 
-extern void COTmrLock(void);
-extern void COTmrUnlock(void);
+
 
 /******************************************************************************
 * PRIVATE FUNCTION PROTOTYPES

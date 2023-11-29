@@ -32,6 +32,9 @@ extern "C" {
 * PUBLIC DEFINES
 ******************************************************************************/
 
+extern void COTmrLock(void);
+extern void COTmrUnlock(void);
+
 #define CO_TMR_UNIT_1MS          1000
 #define CO_TMR_UNIT_100US        10000
 
