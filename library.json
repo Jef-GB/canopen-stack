@@ -1,0 +1,25 @@
+{
+    "name": "canopen-stack",
+    "version": "4.4.0",
+    "keywords": "can, canopen",
+    "description": "Platform independent CANopen stack",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Jef-GB/canopen-stack.git"
+    },
+    "frameworks": "arduino",
+    "platforms": "espressif32",
+    "build": {
+        "libArchive": false,
+        "flags": [
+            "-I'src/config'",
+            "-I'src/core'",
+            "-I'src/driver/_template'",
+            "-I'src/hal'",
+            "-I'src/object/basic'",
+            "-I'src/object/cia301'",
+            "-I'src/service/cia301'",
+            "-I'src/service/cia305'"
+        ]
+    }
+}
