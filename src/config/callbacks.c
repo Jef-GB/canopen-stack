@@ -15,20 +15,19 @@
 ******************************************************************************/
 
 /******************************************************************************
-* INCLUDES
-******************************************************************************/
+ * INCLUDES
+ ******************************************************************************/
 
 #include "co_core.h"
 
-void COTmrLock  (void);
-void COTmrUnlock(void);
+// void COTmrLock(void);
+// void COTmrUnlock(void);
 
 /******************************************************************************
-* MANDATORY CALLBACK FUNCTIONS
-******************************************************************************/
+ * MANDATORY CALLBACK FUNCTIONS
+ ******************************************************************************/
 
-WEAK
-void CONodeFatalError(void)
+WEAK void CONodeFatalError(void)
 {
     volatile uint8_t debugExit = 0u;
 
@@ -36,11 +35,11 @@ void CONodeFatalError(void)
      * There is most likely a programming error.
      * !! Please don't ignore this errors. !!
      */
-    for (;debugExit == 0u;);
+    for (; debugExit == 0u;)
+        ;
 }
 
-WEAK
-void COTmrLock(void)
+WEAK void COTmrLock(void)
 {
     /* This function helps to guarantee the consistancy
      * of the internal timer management while interrupted
@@ -50,10 +49,11 @@ void COTmrLock(void)
      * - get a 'timer-mutex' from your RTOS (ensure to
      *   call COTmrService() in a timer triggered task)
      */
+    for (;;) // ! This method should be over written by the custom implementation
+        ;
 }
 
-WEAK
-void COTmrUnlock(void)
+WEAK void COTmrUnlock(void)
 {
     /* This function helps to guarantee the consistancy
      * of the internal timer management while interrupted
@@ -63,14 +63,15 @@ void COTmrUnlock(void)
      * - release the 'timer-mutex' from your RTOS (ensure
      *   to call COTmrService() in a timer triggered task)
      */
+    for (;;) // ! This method should be over written by the custom implementation
+        ;
 }
 
 /******************************************************************************
-* OPTIONAL CALLBACK FUNCTIONS
-******************************************************************************/
+ * OPTIONAL CALLBACK FUNCTIONS
+ ******************************************************************************/
 
-WEAK
-void CONmtModeChange(CO_NMT *nmt, CO_MODE mode)
+WEAK void CONmtModeChange(CO_NMT *nmt, CO_MODE mode)
 {
     (void)nmt;
     (void)mode;
@@ -80,8 +81,7 @@ void CONmtModeChange(CO_NMT *nmt, CO_MODE mode)
      */
 }
 
-WEAK
-void CONmtResetRequest(CO_NMT *nmt, CO_NMT_RESET reset)
+WEAK void CONmtResetRequest(CO_NMT *nmt, CO_NMT_RESET reset)
 {
     (void)nmt;
     (void)reset;
@@ -91,8 +91,7 @@ void CONmtResetRequest(CO_NMT *nmt, CO_NMT_RESET reset)
      */
 }
 
-WEAK
-void CONmtHbConsEvent(CO_NMT *nmt, uint8_t nodeId)
+WEAK void CONmtHbConsEvent(CO_NMT *nmt, uint8_t nodeId)
 {
     (void)nmt;
     (void)nodeId;
@@ -103,8 +102,7 @@ void CONmtHbConsEvent(CO_NMT *nmt, uint8_t nodeId)
      */
 }
 
-WEAK
-void CONmtHbConsChange(CO_NMT *nmt, uint8_t nodeId, CO_MODE mode)
+WEAK void CONmtHbConsChange(CO_NMT *nmt, uint8_t nodeId, CO_MODE mode)
 {
     (void)nmt;
     (void)nodeId;
@@ -117,7 +115,8 @@ void CONmtHbConsChange(CO_NMT *nmt, uint8_t nodeId, CO_MODE mode)
 }
 
 WEAK
-CO_ERR COLssLoad(uint32_t *baudrate, uint8_t *nodeId)
+    CO_ERR
+    COLssLoad(uint32_t *baudrate, uint8_t *nodeId)
 {
     (void)baudrate;
     (void)nodeId;
@@ -130,7 +129,8 @@ CO_ERR COLssLoad(uint32_t *baudrate, uint8_t *nodeId)
 }
 
 WEAK
-CO_ERR COLssStore(uint32_t baudrate, uint8_t nodeId)
+    CO_ERR
+    COLssStore(uint32_t baudrate, uint8_t nodeId)
 {
     (void)baudrate;
     (void)nodeId;
@@ -142,8 +142,7 @@ CO_ERR COLssStore(uint32_t baudrate, uint8_t nodeId)
     return (CO_ERR_NONE);
 }
 
-WEAK
-void COIfCanReceive(CO_IF_FRM *frm)
+WEAK void COIfCanReceive(CO_IF_FRM *frm)
 {
     (void)frm;
 
@@ -153,8 +152,7 @@ void COIfCanReceive(CO_IF_FRM *frm)
      */
 }
 
-WEAK
-void COPdoTransmit(CO_IF_FRM *frm)
+WEAK void COPdoTransmit(CO_IF_FRM *frm)
 {
     (void)frm;
 
@@ -165,7 +163,8 @@ void COPdoTransmit(CO_IF_FRM *frm)
 }
 
 WEAK
-int16_t COPdoReceive(CO_IF_FRM *frm)
+    int16_t
+    COPdoReceive(CO_IF_FRM *frm)
 {
     (void)frm;
 
@@ -175,11 +174,10 @@ int16_t COPdoReceive(CO_IF_FRM *frm)
      * object dictionary afterwards or suppress the
      * write operation.
      */
-    return(0u);
+    return (0u);
 }
 
-WEAK
-void COPdoSyncUpdate(CO_RPDO *pdo)
+WEAK void COPdoSyncUpdate(CO_RPDO *pdo)
 {
     (void)pdo;
 
@@ -190,7 +188,8 @@ void COPdoSyncUpdate(CO_RPDO *pdo)
 }
 
 WEAK
-int16_t COParaDefault(struct CO_PARA_T *pg)
+    int16_t
+    COParaDefault(struct CO_PARA_T *pg)
 {
     (void)pg;
 
@@ -201,8 +200,7 @@ int16_t COParaDefault(struct CO_PARA_T *pg)
     return (0u);
 }
 
-WEAK
-void CORpdoWriteData(CO_IF_FRM *frm, uint8_t pos, uint8_t size, CO_OBJ *obj)
+WEAK void CORpdoWriteData(CO_IF_FRM *frm, uint8_t pos, uint8_t size, CO_OBJ *obj)
 {
     (void)frm;
     (void)pos;
@@ -215,8 +213,7 @@ void CORpdoWriteData(CO_IF_FRM *frm, uint8_t pos, uint8_t size, CO_OBJ *obj)
      */
 }
 
-WEAK
-void COTpdoReadData(CO_IF_FRM *frm, uint8_t pos, uint8_t size, CO_OBJ *obj)
+WEAK void COTpdoReadData(CO_IF_FRM *frm, uint8_t pos, uint8_t size, CO_OBJ *obj)
 {
     (void)frm;
     (void)pos;
